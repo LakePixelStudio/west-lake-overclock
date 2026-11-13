@@ -292,6 +292,7 @@ All three source models are licensed under [Creative Commons Attribution 4.0 Int
   document.getElementById('overlay').append(retry);
   retry.addEventListener('click', event => { event.stopPropagation(); location.reload(); });
   status.textContent = '正在下载游戏模块…';
+  window.westlakeProgress = () => { retry.hidden = true; };
   const timer = setTimeout(() => {
     status.textContent = (status.dataset.stage || '下载游戏模块') + '耗时较长，可以继续等待或刷新重试。';
     retry.hidden = false;
@@ -302,15 +303,16 @@ All three source models are licensed under [Creative Commons Attribution 4.0 Int
     status.textContent = '页面出错。请刷新重试。';
     retry.hidden = false;
   });
-  import('./wl80-r3-game-game.js').then(() => {
+  import('./wl80-r4-game-game.js').then(() => {
     clearTimeout(timer);
     retry.hidden = true;
   }).catch(error => {
     clearTimeout(timer);
     console.error('West Lake loading failed', error);
     status.setAttribute('role', 'alert');
-    status.textContent = String(error?.message || '').startsWith('WebGL 2 不可用') ? error.message
-      : '加载失败。请刷新重试，或在新版 Chrome、Edge、Safari 或 Firefox 中直接打开。';
+    const message = String(error?.message || '');
+    status.textContent = message.startsWith('WebGL 2 不可用') || message.startsWith('交通资源')
+      ? message : '加载失败。请刷新重试，或在新版 Chrome、Edge、Safari 或 Firefox 中直接打开。';
     retry.hidden = false;
   });
 })();
