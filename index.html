@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>West Lake Overclock</title>
+<link rel="icon" href="data:,">
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;color:#eef2f5;user-select:none}
+  canvas{display:block}
+  #hud{position:fixed;z-index:2;inset:0;pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,.9)}
+  #osd{position:absolute;left:28px;top:24px;font:600 13px/1.65 Consolas,"Cascadia Mono",monospace;letter-spacing:.04em;white-space:pre;background:rgba(0,0,0,.28);padding:10px 14px;border-left:2px solid #ffb000}
+  #osd b{color:#ffb000;font-weight:600}#osd .hot{color:#ff5a3c}#osd .oc{color:#5dff9a}
+  #cross{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px}
+  #cross i{position:absolute;background:#fff;opacity:.9;box-shadow:0 0 2px #000}
+  #cross i:nth-child(1){left:12px;top:0;width:2px;height:8px}#cross i:nth-child(2){left:12px;bottom:0;width:2px;height:8px}
+  #cross i:nth-child(3){top:12px;left:0;height:2px;width:8px}#cross i:nth-child(4){top:12px;right:0;height:2px;width:8px}
+  #hit{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px;opacity:0;transform:rotate(45deg);
+       background:linear-gradient(#fff,#fff) center/2px 100% no-repeat,linear-gradient(#fff,#fff) center/100% 2px no-repeat}
+  #top{position:absolute;top:26px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+  #note{position:absolute;top:58%;left:0;right:0;text-align:center;font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:#ffcf6a;opacity:0;transition:opacity .3s}
+  .panel{position:absolute;bottom:32px;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  #left{left:36px}#right{right:36px;text-align:right}
+  .big{font-size:42px;font-weight:200;letter-spacing:.03em;line-height:1.05;text-transform:none}
+  .bar{width:230px;height:3px;background:rgba(255,255,255,.2);margin-top:8px}.bar b{display:block;height:100%;background:#eef2f5}
+  #slots{margin-top:8px;opacity:.75;line-height:1.7}#slots .on{color:#ffb000;opacity:1}
+  #overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;
+           background:radial-gradient(ellipse at center,rgba(8,6,10,.45),rgba(0,0,0,.9))}
+  #overlay{z-index:3}
+  #overlay h1{font-weight:100;font-size:64px;letter-spacing:.3em;margin:0 0 0 .3em}
+  #overlay h2{font-weight:300;font-size:22px;letter-spacing:.6em;margin:10px 0 26px .6em;color:#ffcf8a}
+  #overlay p{letter-spacing:.18em;text-transform:uppercase;font-size:12px;opacity:.75;line-height:2.1;margin:6px}
+  #map-credit{position:fixed;z-index:4;left:50%;bottom:max(4px,env(safe-area-inset-bottom));transform:translateX(-50%);margin:0;padding:2px 5px;white-space:nowrap;font:11px/1.25 system-ui,sans-serif;background:rgba(0,0,0,.58);border-radius:3px;color:#ddd}
+  #map-credit a{color:inherit}
+  @media(max-width:600px){#overlay{padding:12px}#overlay h1{font-size:clamp(25px,9vw,64px);letter-spacing:.2em}#overlay h2{font-size:clamp(13px,4vw,22px);letter-spacing:.35em}}
+  #msg{font-size:15px!important;opacity:1!important;color:#ffcf8a}
+</style>
+  <script type="module" crossorigin src="./game-bundle.js"></script>
+</head>
+<body>
+<div id="hud">
+  <div id="osd"></div><div id="top"></div><div id="note"></div>
+  <div id="cross"><i></i><i></i><i></i><i></i></div><div id="hit"></div>
+  <div id="left" class="panel">Integrity<div class="big" id="hp">100</div><div class="bar"><b id="hpb"></b></div></div>
+  <div id="right" class="panel"><span id="wsub"></span><div class="big" id="wname"></div><div id="slots"></div></div>
+</div>
+<div id="overlay" role="button" tabindex="0" aria-label="Start game">
+  <h1>WEST LAKE</h1><h2>西湖 · OVERCLOCK</h2>
+  <p id="msg">Generating Hangzhou…</p>
+  <p>WASD move · Shift sprint · Space jump · LMB fire · RMB aim · 1 / 2 / 3: graphics card<br>
+  E: drive a car, take Metro Line 1, board the ferry · in a car: Space drift, F auto-drive round the lake<br>
+  M: map · Collect RAM for VRAM · cards throttle at 95°C · phones and tablets get touch controls</p>
+</div>
+<p id="map-credit">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></p>
+</body>
+</html>
